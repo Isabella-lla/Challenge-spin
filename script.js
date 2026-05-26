@@ -1,338 +1,142 @@
-/* --- Reset & Core Layout --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+const defaultTopics = [
+    "Filsafat",
+    "AI",
+    "Globalisasi",
+    "Politik dan Kemanusiaan",
+    "Mental Health",
+    "Pendidikan"
+];
+
+let customTopics = JSON.parse(localStorage.getItem('customTopics')) || [];
+let currentMode = 'default';
+let timerInterval = null;
+let maxDuration = 60; 
+let timeLeft = 60;
+let isTimerRunning = false;
+
+function updateCustomList() {
+    const list = document.getElementById('topic-list');
+    list.innerHTML = '';
+    customTopics.forEach((topic, index) => {
+        list.innerHTML += `<li><span>${topic}</span> <button onclick="deleteTopic(${index})">REMOVE</button></li>`;
+    });
 }
+updateCustomList();
 
-body {
-    background-color: #fcfcfc; 
-    color: #1a0507; 
-    font-family: 'Tenor Sans', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* --- Container Utama --- */
-.dashboard-fullscreen {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    min-height: 100vh;
-    width: 100vw;
-    padding: 5vh 8vw; /* Memberikan ruang napas di layar laptop */
-    text-align: center;
-}
-
-/* --- Area Panggung Utama --- */
-.main-stage {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    width: 100%;
-    margin-bottom: 3vh;
-}
-
-.motto-text {
-    font-size: 0.85rem; 
-    color: #800020; 
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 2.5vh;
-    font-weight: bold;
-}
-
-/* Judul Tegak, Tinggi, & Tajam (Mengatasi Garis Hilang) */
-.main-title {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 3.2rem; 
-    font-weight: 600;  
-    color: #1a0507;
-    letter-spacing: 5px;
-    margin-bottom: 4vh;
-    text-transform: uppercase;
-    text-shadow: 0.5px 0.5px 0px rgba(26, 5, 7, 0.2); 
-}
-
-/* --- Jendela Gulir Minimalis --- */
-.display-window {
-    width: 100%;
-    max-width: 900px; 
-    height: 110px; 
-    background-color: #ffffff; 
-    border: 1px solid #800020; 
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    margin-bottom: 4vh;
-    box-shadow: 0 4px 20px rgba(128, 0, 32, 0.03);
-}
-
-.scroll-engine {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    transition: transform 3s cubic-bezier(0.15, 0.85, 0.35, 1);
-}
-
-.topic-row {
-    height: 108px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.5rem; 
-    font-weight: normal;
-    padding: 0 40px;
-    text-align: center;
-    color: #1a0507;
-    letter-spacing: 1px;
-}
-
-/* --- Tombol Kontrol Atas --- */
-.action-area {
-    display: flex;
-    flex-direction: row; /* Berjejer horizontal di laptop */
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    margin-bottom: 4vh;
-}
-
-button {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 14px 35px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 2px;
-}
-
-.btn-primary {
-    background-color: #800020; 
-    color: #ffffff;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background-color: #a31432;
-}
-
-.btn-secondary {
-    background-color: transparent;
-    color: #800020;
-    border: 1px solid #800020;
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background-color: rgba(128, 0, 32, 0.05);
-}
-
-button:disabled {
-    border: 1px solid #e8dfdf !important;
-    background-color: transparent !important;
-    color: #e8dfdf !important;
-    cursor: not-allowed;
-}
-
-/* Timer Anggun & Ramping (Tanpa Gepeng) */
-.timer-countdown {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 7.5rem; 
-    font-weight: 500; 
-    color: #800020; 
-    letter-spacing: 2px;
-    line-height: 1;
-    text-shadow: 0.5px 0.5px 0px rgba(128, 0, 32, 0.2);
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-}
-
-
-/* ========================================================
-   === INI KODE BARU YANG TADI HILANG (MANAGEMENT PANEL) ===
-   ======================================================== */
-
-.control-stage {
-    width: 100%;
-    max-width: 850px; /* Fokus di tengah layar laptop */
-    margin: 0 auto;
-}
-
-.divider {
-    height: 1px;
-    background-color: #e0d0d2;
-    margin: 4vh 0 3vh 0;
-}
-
-/* Kontainer utama panel konfigurasi bawah */
-.management-panel {
-    text-align: left;
-    background-color: #faf8f8;
-    padding: 30px;
-    border: 1px solid #e0d0d2;
-    border-radius: 2px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px; /* Memberikan jarak seragam mengalir ke bawah */
-}
-
-.management-panel h2 {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    color: #800020;
-    margin-bottom: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* Baris pembungkus tiap komponen agar tersusun uruutan */
-.config-row {
-    width: 100%;
-}
-
-/* Opsi Radio (System Database & Custom Input) */
-.radio-options {
-    display: flex;
-    flex-direction: row; 
-    gap: 30px;
-    flex-wrap: wrap; 
-}
-
-.radio-label {
-    font-size: 0.9rem;
-    color: #1a0507;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-}
-
-.radio-label input[type="radio"] {
-    accent-color: #800020;
-    width: 16px;
-    height: 16px;
-}
-
-/* Input untuk Durasi Waktu */
-.timer-setting-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 0.9rem;
-}
-
-.timer-setting-group input {
-    width: 80px;
-    padding: 8px 10px;
-    border: 1px solid #e0d0d2;
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-/* Area Input Teks Kustom */
-.field-group {
-    display: flex;
-    flex-direction: row; 
-    gap: 12px;
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-.field-group input {
-    flex: 1;
-    background-color: #ffffff;
-    border: 1px solid #e0d0d2;
-    padding: 10px 14px;
-    color: #1a0507;
-    font-size: 0.9rem;
-    font-family: 'Tenor Sans', sans-serif;
-}
-
-.field-group input:focus, .timer-setting-group input:focus {
-    outline: none;
-    border-color: #800020;
-}
-
-.btn-add {
-    background-color: #1a0507;
-    color: #ffffff;
-    padding: 0 30px;
-    font-size: 0.8rem;
-    width: auto;
-    height: 41px; /* Setara dengan tinggi input text field */
-}
-
-.btn-add:hover {
-    background-color: #331115;
-}
-
-/* Daftar List Topik Custom di Bawahnya */
-.custom-list {
-    list-style: none;
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-.custom-list li {
-    font-size: 0.85rem;
-    padding: 10px 14px;
-    background-color: #ffffff;
-    border: 1px solid #e0d0d2;
-    margin-bottom: 6px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    color: #1a0507;
-}
-
-.custom-list li button {
-    width: auto;
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    background-color: transparent;
-    color: #ff3333;
-    border: 1px solid #ff3333;
-}
-
-.hidden {
-    display: none;
-}
-
-
-/* ======================================================
-   === RESPONSIVE AUTO-TUNING DEVICE (UNTUK HP/MOBILE) ===
-   ====================================================== */
-@media (max-width: 767px) {
-    .dashboard-fullscreen {
-        padding: 3vh 5vw;
-        justify-content: flex-start;
+function switchSource() {
+    const mode = document.querySelector('input[name="source"]:checked').value;
+    currentMode = mode;
+    const inputSection = document.getElementById('custom-input-section');
+    if (mode === 'custom') {
+        inputSection.classList.remove('hidden');
+    } else {
+        inputSection.classList.add('hidden');
     }
-    .main-title { font-size: 2.2rem; margin-bottom: 3vh; }
-    .display-window { height: 90px; }
-    .topic-row { height: 88px; font-size: 1.1rem; }
+}
+
+function addCustomTopic() {
+    const input = document.getElementById('new-topic');
+    const value = input.value.trim();
+    if (value) {
+        customTopics.push(value);
+        localStorage.setItem('customTopics', JSON.stringify(customTopics));
+        input.value = '';
+        updateCustomList();
+    }
+}
+
+function deleteTopic(index) {
+    customTopics.splice(index, 1);
+    localStorage.setItem('customTopics', JSON.stringify(customTopics));
+    updateCustomList();
+}
+
+function changeDuration() {
+    const inputDuration = parseInt(document.getElementById('custom-duration').value);
+    if (!isNaN(inputDuration) && inputDuration >= 5) {
+        maxDuration = inputDuration;
+        if (!isTimerRunning) {
+            timeLeft = maxDuration;
+            displayTimer();
+        }
+    }
+}
+
+function spinTopic() {
+    const pool = currentMode === 'default' ? defaultTopics : customTopics;
     
-    /* Tombol kontrol atas bertumpuk vertikal di HP */
-    .action-area { flex-direction: column; gap: 12px; }
-    .action-area button { width: 100%; }
+    if (currentMode === 'custom' && pool.length < 5) {
+        alert(`Gagal memutar! Kamu wajib memasukkan minimal 5 topik kustom agar tantangan bervariasi. (Topik saat ini: ${pool.length}/5)`);
+        return;
+    }
     
-    .timer-countdown { font-size: 5rem; }
-    
-    /* Konfigurasi bawah beralih mengalir satu jalur lurus ke bawah */
-    .radio-options { flex-direction: column; gap: 15px; }
-    .field-group { flex-direction: column; }
-    .btn-add { width: 100%; }
-    .custom-list li { flex-direction: row; justify-content: space-between; }
+    if (pool.length === 0) {
+        alert("Daftar topik kosong. Masukkan topik terlebih dahulu.");
+        return;
+    }
+
+    const container = document.getElementById('topic-container');
+    container.style.transition = 'none'; 
+    container.style.transform = 'translateY(0)';
+
+    let htmlContent = '';
+    const spinCount = 15; 
+    let finalTopic = '';
+
+    for (let i = 0; i < spinCount; i++) {
+        const randomTopic = pool[Math.floor(Math.random() * pool.length)];
+        htmlContent += `<div class="topic-row">${randomTopic.toUpperCase()}</div>`;
+        if (i === spinCount - 1) finalTopic = randomTopic;
+    }
+    container.innerHTML = htmlContent;
+
+    setTimeout(() => {
+        container.style.transition = 'transform 3s cubic-bezier(0.15, 0.85, 0.35, 1)';
+        const rowHeight = 108;  /* DISESUAIKAN: Mengikuti tinggi baris bingkai baru */
+        const offset = -(rowHeight * (spinCount - 1));
+        container.style.transform = `translateY(${offset}px)`;
+    }, 50);
+
+    setTimeout(() => {
+        document.getElementById('timer-btn').disabled = false;
+        resetTimer();
+    }, 3050);
+}
+
+function toggleTimer() {
+    const btn = document.getElementById('timer-btn');
+    if (isTimerRunning) {
+        clearInterval(timerInterval);
+        btn.innerText = "START TIMER";
+        isTimerRunning = false;
+    } else {
+        isTimerRunning = true;
+        btn.innerText = "PAUSE";
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            displayTimer();
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer').innerText = "TIME OUT";
+                btn.innerText = "START TIMER";
+                btn.disabled = true;
+                isTimerRunning = false;
+            }
+        }, 1000);
+    }
+}
+
+function resetTimer() {
+    clearInterval(timerInterval);
+    timeLeft = maxDuration; 
+    displayTimer();
+    document.getElementById('timer-btn').innerText = "START TIMER";
+    isTimerRunning = false;
+}
+
+function displayTimer() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').innerText = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
