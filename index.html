@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullscreen Challenge Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dashboard-fullscreen">
+        <div class="main-stage">
+            <p class="motto-text">disini.</p>
+            <h1 class="main-title">1-MINUTE RANDOM TOPIC</h1>
+
+            <div class="display-window">
+                <div class="scroll-engine" id="topic-container">
+                    <div class="topic-row">READY TO FOCUS</div>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <button id="spin-btn" class="btn-primary" onclick="spinTopic()">SPIN TOPIC</button>
+                <button id="timer-btn" class="btn-secondary" onclick="toggleTimer()" disabled>START TIMER</button>
+            </div>
+
+            <div class="timer-countdown" id="timer">01:00</div>
+        </div>
+
+        <div class="control-stage">
+            <div class="divider"></div>
+            <div class="management-panel">
+                <h2>TOPIC CONFIGURATION</h2>
+                
+                <div class="panel-flex-row">
+                    <div class="left-config">
+                        <div class="radio-options">
+                            <label class="radio-label">
+                                <input type="radio" name="source" value="default" checked onchange="switchSource()"> System Database
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="source" value="custom" onchange="switchSource()"> Custom Input (Min. 5 Topics)
+                            </label>
+                        </div>
+
+                        <div class="timer-setting-group">
+                            <label for="custom-duration">Duration (Seconds):</label>
+                            <input type="number" id="custom-duration" value="60" min="5" max="300" onchange="changeDuration()">
+                        </div>
+                    </div>
+
+                    <div id="custom-input-section" class="input-section hidden">
+                        <div class="field-group">
+                            <input type="text" id="new-topic" placeholder="Type your custom topic here...">
+                            <button class="btn-add" onclick="addCustomTopic()">ADD</button>
+                        </div>
+                        <ul id="topic-list" class="custom-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
