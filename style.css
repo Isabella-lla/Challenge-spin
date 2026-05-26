@@ -10,16 +10,20 @@ body {
     color: #1a0507; 
     font-family: 'Tenor Sans', sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .dashboard-fullscreen {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; 
     min-height: 100vh;
     width: 100vw;
-    padding: 4vh 6vw; 
+    padding: 5vh 8vw; 
     text-align: center;
 }
 
@@ -30,32 +34,35 @@ body {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    padding-top: 1vh;
+    width: 100%;
+    margin-bottom: 3vh;
 }
 
 .motto-text {
-    font-size: 0.9rem; 
+    font-size: 0.85rem; 
     color: #800020; 
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 2vh;
+    margin-bottom: 2.5vh;
     font-weight: bold;
 }
 
+
 .main-title {
     font-family: 'Bodoni Moda', serif;
-    font-size: 3.5rem; 
-    font-weight: 400; 
+    font-size: 3.2rem; 
+    font-weight: 600;  
     color: #1a0507;
-    letter-spacing: 4px;
-    margin-bottom: 5vh;
+    letter-spacing: 5px;
+    margin-bottom: 4vh;
     text-transform: uppercase;
+    text-shadow: 0.5px 0.5px 0px rgba(26, 5, 7, 0.2); 
 }
 
 
 .display-window {
     width: 100%;
-    max-width: 950px; 
+    max-width: 900px; 
     height: 110px; 
     background-color: #ffffff; 
     border: 1px solid #800020; 
@@ -63,7 +70,7 @@ body {
     overflow: hidden;
     display: flex;
     align-items: center;
-    margin-bottom: 5vh;
+    margin-bottom: 4vh;
     box-shadow: 0 4px 20px rgba(128, 0, 32, 0.03);
 }
 
@@ -79,9 +86,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Tenor Sans', sans-serif; 
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 1.5rem; 
     font-weight: normal;
-    padding: 0 50px;
+    padding: 0 40px;
     text-align: center;
     color: #1a0507;
     letter-spacing: 1px;
@@ -90,18 +98,20 @@ body {
 
 .action-area {
     display: flex;
+    flex-direction: row; 
     justify-content: center;
     gap: 20px;
+    width: 100%;
     margin-bottom: 4vh;
 }
 
 button {
     font-family: 'Tenor Sans', sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 14px 36px;
+    padding: 14px 35px;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -138,57 +148,62 @@ button:disabled {
 .timer-countdown {
     font-family: 'Bodoni Moda', serif;
     font-size: 7.5rem; 
-    font-weight: 400; 
+    font-weight: 500; 
     color: #800020; 
-    margin-bottom: 2vh;
     letter-spacing: 2px;
     line-height: 1;
+    text-shadow: 0.5px 0.5px 0px rgba(128, 0, 32, 0.2);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
+
+
 
 
 .control-stage {
     width: 100%;
-    max-width: 950px;
+    max-width: 850px; 
     margin: 0 auto;
 }
 
 .divider {
     height: 1px;
     background-color: #e0d0d2;
-    margin: 2vh 0;
+    margin: 4vh 0 3vh 0;
 }
+
 
 .management-panel {
     text-align: left;
     background-color: #faf8f8;
-    padding: 20px 25px;
+    padding: 30px;
     border: 1px solid #e0d0d2;
     border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
 }
 
 .management-panel h2 {
     font-size: 0.85rem;
     letter-spacing: 2px;
     color: #800020;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
-.panel-flex-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
+
+.config-row {
+    width: 100%;
 }
 
-.left-config {
-    flex: 1;
-}
 
 .radio-options {
     display: flex;
+    flex-direction: row; 
     gap: 30px;
-    margin-bottom: 15px;
+    flex-wrap: wrap; 
 }
 
 .radio-label {
@@ -198,55 +213,52 @@ button:disabled {
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
 }
 
 .radio-label input[type="radio"] {
     accent-color: #800020;
+    width: 16px;
+    height: 16px;
 }
+
 
 .timer-setting-group {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     font-size: 0.9rem;
 }
 
 .timer-setting-group input {
-    width: 70px;
-    padding: 5px;
+    width: 80px;
+    padding: 8px 10px;
     border: 1px solid #e0d0d2;
     font-family: 'Tenor Sans', sans-serif;
     font-size: 0.9rem;
     text-align: center;
 }
 
-.timer-setting-group input:focus {
-    outline: none;
-    border-color: #800020;
-}
-
-
-.input-section {
-    flex: 1;
-}
 
 .field-group {
     display: flex;
-    gap: 10px;
-    margin-bottom: 12px;
+    flex-direction: row; 
+    gap: 12px;
+    margin-bottom: 15px;
+    width: 100%;
 }
 
 .field-group input {
     flex: 1;
     background-color: #ffffff;
     border: 1px solid #e0d0d2;
-    padding: 8px 12px;
+    padding: 10px 14px;
     color: #1a0507;
     font-size: 0.9rem;
     font-family: 'Tenor Sans', sans-serif;
 }
 
-.field-group input:focus {
+.field-group input:focus, .timer-setting-group input:focus {
     outline: none;
     border-color: #800020;
 }
@@ -254,36 +266,69 @@ button:disabled {
 .btn-add {
     background-color: #1a0507;
     color: #ffffff;
-    padding: 0 15px;
+    padding: 0 30px;
     font-size: 0.8rem;
+    width: auto;
+    height: 41px; 
 }
+
+.btn-add:hover {
+    background-color: #331115;
+}
+
 
 .custom-list {
     list-style: none;
-    max-height: 90px;
+    max-height: 150px;
     overflow-y: auto;
 }
 
 .custom-list li {
     font-size: 0.85rem;
-    padding: 6px 10px;
+    padding: 10px 14px;
     background-color: #ffffff;
     border: 1px solid #e0d0d2;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     color: #1a0507;
 }
 
 .custom-list li button {
+    width: auto;
+    padding: 4px 10px;
+    font-size: 0.7rem;
     background-color: transparent;
     color: #ff3333;
-    padding: 2px 6px;
-    font-size: 0.7rem;
     border: 1px solid #ff3333;
 }
 
 .hidden {
     display: none;
+}
+
+
+
+@media (max-width: 767px) {
+    .dashboard-fullscreen {
+        padding: 3vh 5vw;
+        justify-content: flex-start;
+    }
+    .main-title { font-size: 2.2rem; margin-bottom: 3vh; }
+    .display-window { height: 90px; }
+    .topic-row { height: 88px; font-size: 1.1rem; }
+    
+    
+    .action-area { flex-direction: column; gap: 12px; }
+    .action-area button { width: 100%; }
+    
+    .timer-countdown { font-size: 5rem; }
+    
+    
+    .radio-options { flex-direction: column; gap: 15px; }
+    .field-group { flex-direction: column; }
+    .btn-add { width: 100%; }
+    .custom-list li { flex-direction: row; justify-content: space-between; }
 }
