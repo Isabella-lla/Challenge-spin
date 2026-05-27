@@ -1,334 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin Topics</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+    <div class="dashboard-fullscreen">
+        <div class="main-stage">
+            <p class="motto-text">Hello, Genius!.</p>
+            <h1 class="main-title">1-MINUTE RANDOM TOPIC</h1>
 
-body {
-    background-color: #fcfcfc; 
-    color: #1a0507; 
-    font-family: 'Tenor Sans', sans-serif;
-    overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+            <div class="display-window">
+                <div class="scroll-engine" id="topic-container">
+                    <div class="topic-row">READY TO FOCUS</div>
+                </div>
+            </div>
 
+            <div class="action-area">
+                <button id="spin-btn" class="btn-primary" onclick="spinTopic()">SPIN TOPIC</button>
+                <button id="timer-btn" class="btn-secondary" onclick="toggleTimer()" disabled>START TIMER</button>
+            </div>
 
-.dashboard-fullscreen {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    min-height: 100vh;
-    width: 100vw;
-    padding: 5vh 8vw; 
-    text-align: center;
-}
+            <div class="timer-countdown" id="timer">01:00</div>
+        </div>
 
-
-.main-stage {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    width: 100%;
-    margin-bottom: 3vh;
-}
-
-.motto-text {
-    font-size: 0.85rem; 
-    color: #800020; 
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 2.5vh;
-    font-weight: bold;
-}
-
-
-.main-title {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 3.2rem; 
-    font-weight: 600;  
-    color: #1a0507;
-    letter-spacing: 5px;
-    margin-bottom: 4vh;
-    text-transform: uppercase;
-    text-shadow: 0.5px 0.5px 0px rgba(26, 5, 7, 0.2); 
-}
-
-
-.display-window {
-    width: 100%;
-    max-width: 900px; 
-    height: 110px; 
-    background-color: #ffffff; 
-    border: 1px solid #800020; 
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    margin-bottom: 4vh;
-    box-shadow: 0 4px 20px rgba(128, 0, 32, 0.03);
-}
-
-.scroll-engine {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    transition: transform 3s cubic-bezier(0.15, 0.85, 0.35, 1);
-}
-
-.topic-row {
-    height: 108px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 1.5rem; 
-    font-weight: normal;
-    padding: 0 40px;
-    text-align: center;
-    color: #1a0507;
-    letter-spacing: 1px;
-}
-
-
-.action-area {
-    display: flex;
-    flex-direction: row; 
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    margin-bottom: 4vh;
-}
-
-button {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 0.85rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 14px 35px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 2px;
-}
-
-.btn-primary {
-    background-color: #800020; 
-    color: #ffffff;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background-color: #a31432;
-}
-
-.btn-secondary {
-    background-color: transparent;
-    color: #800020;
-    border: 1px solid #800020;
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background-color: rgba(128, 0, 32, 0.05);
-}
-
-button:disabled {
-    border: 1px solid #e8dfdf !important;
-    background-color: transparent !important;
-    color: #e8dfdf !important;
-    cursor: not-allowed;
-}
-
-
-.timer-countdown {
-    font-family: 'Bodoni Moda', serif;
-    font-size: 7.5rem; 
-    font-weight: 500; 
-    color: #800020; 
-    letter-spacing: 2px;
-    line-height: 1;
-    text-shadow: 0.5px 0.5px 0px rgba(128, 0, 32, 0.2);
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-}
-
-
-
-
-.control-stage {
-    width: 100%;
-    max-width: 850px; 
-    margin: 0 auto;
-}
-
-.divider {
-    height: 1px;
-    background-color: #e0d0d2;
-    margin: 4vh 0 3vh 0;
-}
-
-
-.management-panel {
-    text-align: left;
-    background-color: #faf8f8;
-    padding: 30px;
-    border: 1px solid #e0d0d2;
-    border-radius: 2px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px; 
-}
-
-.management-panel h2 {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    color: #800020;
-    margin-bottom: 5px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-
-.config-row {
-    width: 100%;
-}
-
-
-.radio-options {
-    display: flex;
-    flex-direction: row; 
-    gap: 30px;
-    flex-wrap: wrap; 
-}
-
-.radio-label {
-    font-size: 0.9rem;
-    color: #1a0507;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-}
-
-.radio-label input[type="radio"] {
-    accent-color: #800020;
-    width: 16px;
-    height: 16px;
-}
-
-
-.timer-setting-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 0.9rem;
-}
-
-.timer-setting-group input {
-    width: 80px;
-    padding: 8px 10px;
-    border: 1px solid #e0d0d2;
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-
-.field-group {
-    display: flex;
-    flex-direction: row; 
-    gap: 12px;
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-.field-group input {
-    flex: 1;
-    background-color: #ffffff;
-    border: 1px solid #e0d0d2;
-    padding: 10px 14px;
-    color: #1a0507;
-    font-size: 0.9rem;
-    font-family: 'Tenor Sans', sans-serif;
-}
-
-.field-group input:focus, .timer-setting-group input:focus {
-    outline: none;
-    border-color: #800020;
-}
-
-.btn-add {
-    background-color: #1a0507;
-    color: #ffffff;
-    padding: 0 30px;
-    font-size: 0.8rem;
-    width: auto;
-    height: 41px; 
-}
-
-.btn-add:hover {
-    background-color: #331115;
-}
-
-
-.custom-list {
-    list-style: none;
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-.custom-list li {
-    font-size: 0.85rem;
-    padding: 10px 14px;
-    background-color: #ffffff;
-    border: 1px solid #e0d0d2;
-    margin-bottom: 6px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    color: #1a0507;
-}
-
-.custom-list li button {
-    width: auto;
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    background-color: transparent;
-    color: #ff3333;
-    border: 1px solid #ff3333;
-}
-
-.hidden {
-    display: none;
-}
-
-
-
-@media (max-width: 767px) {
-    .dashboard-fullscreen {
-        padding: 3vh 5vw;
-        justify-content: flex-start;
-    }
-    .main-title { font-size: 2.2rem; margin-bottom: 3vh; }
-    .display-window { height: 90px; }
-    .topic-row { height: 88px; font-size: 1.1rem; }
+        <div class="control-stage">
+            <div class="divider"></div>
+            <div class="management-panel">
+    <h2>Topic Configuration</h2>
     
-    
-    .action-area { flex-direction: column; gap: 12px; }
-    .action-area button { width: 100%; }
-    
-    .timer-countdown { font-size: 5rem; }
-    
-    
-    .radio-options { flex-direction: column; gap: 15px; }
-    .field-group { flex-direction: column; }
-    .btn-add { width: 100%; }
-    .custom-list li { flex-direction: row; justify-content: space-between; }
-}
+    <div class="config-row">
+        <div class="radio-options">
+            <label class="radio-label">
+                <input type="radio" name="topicMode" value="default" checked> By System
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="topicMode" value="custom"> Custom Input (Min. 5 Topics)
+            </label>
+        </div>
+    </div>
+
+    <div class="config-row">
+        <div class="timer-setting-group">
+            <label>Duration (Seconds):</label>
+            <input type="number" id="duration-input" value="60" min="5">
+        </div>
+    </div>
+
+    <div id="custom-input-section" class="config-row">
+    <div class="field-group">
+        <input type="text" id="custom-topic-field" placeholder="Type your custom topic here...">
+        <button id="add-topic-btn" class="btn-add">ADD</button>
+    </div>
+    <ul id="custom-topics-list" class="custom-list"></ul>
+</div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
